@@ -1,0 +1,24 @@
+{
+  "name": "amrs-concept-server",
+  "version": "1.0.0",
+  "description": "REST server to fetch concept ids from OpenMRS concept table",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fatmali/amrs-concept-server.git"
+  },
+  "author": "Ampath Kenya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fatmali/amrs-concept-server/issues"
+  },
+  "homepage": "https://github.com/Fatmali/amrs-concept-server#readme",
+  "dependencies": {
+    "blipp": "^3.0.0",
+    "hapi": "^16.6.2",
+    "mysql": "^2.15.0"
+  }
+}
