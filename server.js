@@ -19,7 +19,6 @@ var plugins = [
     
 ];
 server.connection({
-    host: config.app.host,
     port: config.app.port
 });
 

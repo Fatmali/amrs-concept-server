@@ -1,14 +1,16 @@
-const mysql = require('mysql');
-const config = require('../config/config');
+import config from "../config/config";
+import mysql from "mysql";
 
-var connection = function(){
-    return mysql.createConnection({
-        host : config.database.host,
+const connections = function () {
+
+    return mysql.createPool({
+        host: config.database.host,
         port: config.database.port,
-        user : config.database.user,
-        password : config.database.password,
+        user: config.database.user,
+        password: config.database.password,
         database: config.database.database,
-        multipleStatements: true 
+        multipleStatements: true
     });
 };
-module.exports = connection();
+module.exports = connections();
+

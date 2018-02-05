@@ -1,7 +1,7 @@
-FROM node:carbon
-WORKDIR /usr/src/app
-COPY package*.json ./
+FROM bitnami/node:6 as builder
+ENV NODE_ENV="production"
+COPY . /app
+WORKDIR /app
 RUN npm install
-COPY . .
-EXPOSE 6789
+EXPOSE 3544
 CMD ["npm", "start"]

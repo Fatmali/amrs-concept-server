@@ -1,37 +1,51 @@
-const db = require('../connection/database');
-const config = require('../config/config');
+import config from "../config/config";
+import poolConnection from "../connection/database";
 
-
-var checkServerIsUp = function(request, reply){
-    return reply('Server is up and running');
-};
-
-
-var routes = [
+const routes = [
     {
         method: 'GET',
         path: '/',
-        handler: function(req, reply){
-            return reply(`Server is up and running`);
+        handler: function (req, reply) {
+            return reply(`AMRS Concept ID Server is up and running - This server helps to fetch concept IDS from OpenMRS tables.`);
         }
     },
     {
         method: 'GET',
-        path: '/concept_id',
-        handler: function(request, reply){
-            db.query(`SELECT * from ${config.database.table}`, function(err, results, fields){
-                if(err) { throw err; }
-                reply(results, fields)
+        path: '/api/concepts',
+        handler: function (request, reply) {
+            poolConnection.getConnection((err, connection) => {
+                if (err) {
+                    connection.end();
+                    console.log(err);
+                    return;
+                }
+                connection.query(`SELECT * from ${config.database.table}`, function (err, results, fields) {
+                    if (err) {
+                        throw err;
+                    }
+                    reply(results, fields);
+                    connection.release();
+                });
             });
         }
     },
     {
         method: 'GET',
-        path: '/concept_id/{uuid}',
-        handler: function(request, reply){
-            db.query(`SELECT * from ${config.database.table} where uuid="${request.params.uuid}"`, function(err, results, fields){
-                if(err) { throw err; }
-                reply(results[0], fields);
+        path: '/api/{uuid}',
+        handler: function (request, reply) {
+            poolConnection.getConnection((err, connection) => {
+                if (err) {
+                    connection.end();
+                    console.log(err);
+                    return;
+                }
+                connection.query(`SELECT * from ${config.database.table} where uuid="${request.params.uuid}"`, function (err, results, fields) {
+                    if (err) {
+                        throw err;
+                    }
+                    reply(results, fields);
+                    connection.release();
+                });
             });
         }
     }
